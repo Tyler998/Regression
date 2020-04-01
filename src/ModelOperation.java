@@ -6,8 +6,9 @@ import java.io.*;
 public class ModelOperation {
     /**
      * 序列化
-     * @param ridgeRegressionModel
-     * @param add 路径
+     *
+     * @param ridgeRegressionModel 回归模型
+     * @param add                  路径
      * @throws IOException
      */
 
@@ -18,7 +19,7 @@ public class ModelOperation {
     }
 
     /**
-     * 反序列化
+     *
      * @param add 路径
      * @return
      * @throws IOException

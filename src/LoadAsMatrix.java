@@ -4,6 +4,7 @@ import java.util.Scanner;
 import java.util.ArrayList;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+
 public class LoadAsMatrix {
     /**
      * 加载本地文件，最后一列需为标签列。

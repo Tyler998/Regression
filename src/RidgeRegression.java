@@ -4,6 +4,7 @@ import org.apache.commons.math3.linear.RealMatrix;
 
 
 import java.io.*;
+
 public class RidgeRegression implements Serializable {
     private static final long serialVersionUID = 1234567L;
     private RealMatrix ws;//各个特征的权重组成的矩阵,最后一个维度是bias
@@ -136,7 +137,8 @@ public class RidgeRegression implements Serializable {
 
     /**
      * 矩阵右增元素相等的一列
-     * @param data 需要更改的矩阵
+     *
+     * @param data  需要更改的矩阵
      * @param value 要增加的列的特征值
      */
 
