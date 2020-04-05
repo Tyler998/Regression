@@ -13,10 +13,14 @@ public class Test {
         double[][] ydataNorm = Regularization.normalize4ZScore(ydata); //规范化
 
         RidgeRegression ridgeRegressionModel = new RidgeRegression();
-       // ridgeRegressionModel.fit(xdataNorm, ydataNorm, (float) 0.2);
-        double[][] ws = {{1},{1}, {1}, {1}, {1}, {1}, {1}, {1}, {1}};
-        ridgeRegressionModel.fit(xdataNorm, ydataNorm,  0.2,ws,0.00001,2000000);
+        //用正规方程进行回归分析
+        ridgeRegressionModel.fit(xdataNorm, ydataNorm, 0.2);
 
+        /*
+        //用梯度下降进行回归分析
+        double[][] ws = {{1},{1}, {1}, {1}, {1}, {1}, {1}, {1}, {1}};
+        ridgeRegressionModel.fit(xdataNorm, ydataNorm,  0.2,ws,0.001,200000);
+        */
 
         //model to file
         ModelOperation.savetoFile(ridgeRegressionModel, "/Users/icu/Documents/java learning/Regression/model.pkl");
@@ -24,6 +28,7 @@ public class Test {
         //file to model
         RidgeRegression model = ModelOperation.loadasModel("/Users/icu/Documents/java learning/Regression/model.pkl");
 
+        //预测
         double[][] x = {{1, 1, 1, 1, 1, 1, 1, 1}};
         System.out.println(model.predict(x));
 
