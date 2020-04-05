@@ -13,7 +13,9 @@ public class Test {
         double[][] ydataNorm = Regularization.normalize4ZScore(ydata); //规范化
 
         RidgeRegression ridgeRegressionModel = new RidgeRegression();
-        ridgeRegressionModel.fit(xdataNorm, ydataNorm, (float) 0.2);
+       // ridgeRegressionModel.fit(xdataNorm, ydataNorm, (float) 0.2);
+        double[][] ws = {{1},{1}, {1}, {1}, {1}, {1}, {1}, {1}, {1}};
+        ridgeRegressionModel.fit(xdataNorm, ydataNorm,  0.2,ws,0.00001,2000000);
 
 
         //model to file

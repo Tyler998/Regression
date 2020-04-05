@@ -20,7 +20,7 @@ public class RidgeRegression implements Serializable {
      * @param lam   惩罚系数
      * @return 权重估计值
      */
-    public void fit(double[][] xData, double[][] yData, Float lam) {
+    public void fit(double[][] xData, double[][] yData, double lam) {
         addColumn(xData, 1);//训练集上增加一列，值为1
         RealMatrix xMat = new Array2DRowRealMatrix(xData); //将数组转化为矩阵
         RealMatrix yMat = new Array2DRowRealMatrix(yData); //将数组转化为矩阵
@@ -36,28 +36,29 @@ public class RidgeRegression implements Serializable {
      *
      * @param xData         输入样本
      * @param yData         样本标签
-     * @param lamb          惩罚系数
+     * @param lam          惩罚系数
      * @param alpha         学习率
      * @param initialWeight 初始权重
      * @param times         迭代次数
      */
-    public void fit(double[][] xData, double[][] yData, double lamb, double[][] initialWeight, double alpha, int times) {
+    public void fit(double[][] xData, double[][] yData, double lam, double[][] initialWeight, double alpha, int times) {
+        addColumn(xData, 1);//训练集上增加一列，值为1
         RealMatrix xMat = new Array2DRowRealMatrix(xData); //将数组转化为矩阵
+        this.dim = xMat.getColumnDimension();
         RealMatrix yMat = new Array2DRowRealMatrix(yData); //将数组转化为矩阵
         RealMatrix ws = new Array2DRowRealMatrix(initialWeight); //将数组转化为矩阵
 
         this.xSize = xMat.getRowDimension();
+        RealMatrix xMat_T = xMat.transpose();
         for (int i = 0; i < times; i++) {
-            RealMatrix temp1 = xMat.multiply(ws).subtract(yMat);//xMat * ws - yMat
-            RealMatrix learnRateMatrx = diagonalMatrix(1, alpha / this.xSize);//  学习率/n
-            RealMatrix temp2 = ws.multiply(diagonalMatrix(1, lamb)); // lam * ws
-            RealMatrix grad = xMat.transpose().multiply(temp1).multiply(learnRateMatrx).add(temp2);//梯度与学习率的积
-            ws = ws.subtract(grad);
+            RealMatrix grad = xMat_T.multiply(xMat).add(diagonalMatrix(dim, lam)).multiply(ws).subtract(xMat_T.multiply(yMat));
+            RealMatrix learnRateMatrx = diagonalMatrix(dim, alpha/ this.xSize);//  学习率/n
+            ws = ws.subtract(learnRateMatrx.multiply(grad));
             if (i % 5000 == 0) {
                 System.out.println(ws);
             }
-            this.ws = ws;
         }
+        this.ws = ws;
     }
 
     /**
@@ -96,6 +97,7 @@ public class RidgeRegression implements Serializable {
      * @return
      */
     public double calculateScroe(double[][] yData, RealMatrix yDataPredict) {
+        //TODO
 
         double[] yDataTemp = new double[yData.length];
         for (int i = 0; i < yData.length; i++) {
@@ -155,6 +157,7 @@ public class RidgeRegression implements Serializable {
         }
 
     }
+
 
 
     public RealMatrix getWs() {
