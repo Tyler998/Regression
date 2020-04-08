@@ -2,8 +2,7 @@ import org.apache.commons.math3.linear.Array2DRowRealMatrix;
 import org.apache.commons.math3.linear.LUDecomposition;
 import org.apache.commons.math3.linear.RealMatrix;
 
-
-import java.io.*;
+import java.io.Serializable;
 
 public class RidgeRegression implements Serializable {
     private static final long serialVersionUID = 1234567L;
@@ -97,8 +96,7 @@ public class RidgeRegression implements Serializable {
      * @return
      */
     public double calculateScroe(double[][] yData, RealMatrix yDataPredict) {
-        //TODO
-
+        //TODO 未测试
         double[] yDataTemp = new double[yData.length];
         for (int i = 0; i < yData.length; i++) {
             yDataTemp[i] = yData[i][0];
