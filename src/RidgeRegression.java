@@ -20,8 +20,8 @@ public class RidgeRegression implements Serializable {
      * @return 权重估计值
      */
     public void fit(double[][] xData, double[][] yData, double lam) {
-        addColumn(xData, 1);//训练集上增加一列，值为1
-        RealMatrix xMat = new Array2DRowRealMatrix(xData); //将数组转化为矩阵
+        double[][] xData_0 = addColumn(xData, 1);//训练集上增加一列，值为1
+        RealMatrix xMat = new Array2DRowRealMatrix(xData_0); //将数组转化为矩阵
         RealMatrix yMat = new Array2DRowRealMatrix(yData); //将数组转化为矩阵
 
         RealMatrix xTx = xMat.transpose().multiply(xMat);//xtx=x.T * x
@@ -41,8 +41,8 @@ public class RidgeRegression implements Serializable {
      * @param times         迭代次数
      */
     public void fit(double[][] xData, double[][] yData, double lam, double[][] initialWeight, double alpha, int times) {
-        addColumn(xData, 1);//训练集上增加一列，值为1
-        RealMatrix xMat = new Array2DRowRealMatrix(xData); //将数组转化为矩阵
+        double[][] xData_0 = addColumn(xData, 1);//训练集上增加一列，值为1
+        RealMatrix xMat = new Array2DRowRealMatrix(xData_0); //将数组转化为矩阵
         this.dim = xMat.getColumnDimension();
         RealMatrix yMat = new Array2DRowRealMatrix(yData); //将数组转化为矩阵
         RealMatrix ws = new Array2DRowRealMatrix(initialWeight); //将数组转化为矩阵
@@ -67,8 +67,8 @@ public class RidgeRegression implements Serializable {
      * @return 各个特征权重的估计值
      */
     public RealMatrix predict(double[][] xData) throws Exception {
-        addColumn(xData, 1);
-        RealMatrix xMat = new Array2DRowRealMatrix(xData);
+        double[][] xData_0 = addColumn(xData, 1);
+        RealMatrix xMat = new Array2DRowRealMatrix(xData_0);
         if (ws != null) {
             return xMat.multiply(this.ws);
         } else {
@@ -142,17 +142,19 @@ public class RidgeRegression implements Serializable {
      * @param value 要增加的列的特征值
      */
 
-    public void addColumn(double[][] data, float value) {
+    public double[][] addColumn(double[][] data, float value) {
+        int dim = data[0].length;
+        double[][] data_0 = new double[data.length][dim + 1];
         for (int i = 0; i < data.length; i++) {
-            int dim = data[i].length;
 
             double[] tempArray = new double[dim + 1];
             for (int j = 0; j < dim; j++) {
                 tempArray[j] = data[i][j];
             }
             tempArray[dim] = value;
-            data[i] = tempArray;
+            data_0[i] = tempArray;
         }
+        return data_0;
 
     }
 
